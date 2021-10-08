@@ -1,0 +1,90 @@
+---
+title: "Functions"
+author: "Iñaki Urrutia"
+date: "8/10/2021"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Create a function "impares" that given an array returns the number of odd elements it contains / Crea una función "impares" que dado un vector devuelva la cantidad de elementos impares que contiene.
+
+```{r}
+impares <- function(v)
+{
+  sum(v %% 2 == 1)
+}
+numbers <- 1:10
+
+impares(numbers)
+```
+
+##Create a function "cambio" that, given a matrix of integer numbers, replaces all NA by 0 / Crea una función "cambio" que dada una matriz de numeros enteros reemplaze todos los NA por el valor 0.
+
+```{r}
+cambio <- function(m)
+{
+  m[is.na(m)] = 0
+  m
+}
+
+m <- matrix(c(1:5, NA, 7:10, NA, 12:16), ncol = 4)
+m <- cambio(m)
+
+m
+```
+
+##Create a function "unir" that given two arrays returns a new array with the elements of both arrays without repetition / Crea una función "unir" que dados dos vectores devuelva un nuevo vector con los elementos de ambos vectores sin repetidos.
+
+```{r}
+unir <- function (v1, v2)
+{
+  v <- unique(c(v1, v2))
+  v
+}
+v1 <- 1:10
+v2 <- 5:15
+v <- unir(v1, v2)
+
+v
+```
+
+##Create a function "vyc" that given a string returns a list of two components, one containing the vowels and the other the consonants / Crea una función "vyc" que dado un string devuelva una lista de dos componentes que contenga las vocales y las consonantes.
+```{r}
+vyc <- function (string)
+{
+  string <- gsub("[^a-zA-Z]", "", string)
+  mask_vocales <- as.vector(gregexpr(text = string, pattern = "[aeiou]")[[1]])
+  vocales <- strsplit(string, split = "")[[1]][mask_vocales]
+  consonantes <- strsplit(string, split = "")[[1]][-mask_vocales]
+  list(vocales, consonantes)
+
+}
+string = "Esto es una frase de prueba"
+res <- vyc(string)
+
+res
+```
+
+##Create a function that given an array v and two values x and y (with y an optional parameter), returns a new array with the values included after the first x upto the first y. If y is not indicated, the function will return the values after the first x until the end of the array / Crea una función partir que dado un vector v y dos valores x e y (siendo y opcional), retorne un vector con los valores que aparecen luego del primer x y hasta el primer y. De no indicarse el valor de y se devolveran todos los valores que aparecen luego del primer x hasta el final del vector.
+
+```{r}
+subvector <- function(v, x, y = NULL)
+{
+  ini = which(v == x)[1]
+  if (is.null(y))
+    fin = length(v)
+  else
+    fin = which(v == y)[1]
+  
+  v <- v[ini:fin]
+  v
+}  
+v = 10:1
+x = 6
+subv <- subvector(v = 10:1, x = 6)
+
+subv
+```
