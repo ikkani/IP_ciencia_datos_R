@@ -9,22 +9,53 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
+## Create a string array contaning your first name and last names (e.g., ["Rocio", "Romero", Zaliz"]). Using that array and the R functions you just learned create a new string with the initial of your first name, a dot, and your last names (e.g., "R. Romero Zaliz") / Crea un vector de strings con tu primer nombre y tus dos apellidos. A partir de éste crea un nuevo string con la inicial de tu nombre (y un punto) y el apellido completo utilizando lo aprendido anteriormente. En mi caso debería quedar: "R. Romero Zaliz".
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+```{r}
+name <- c("Iñaki", "Urrutia", "Sánchez")
+paste(paste(substr(name[1],1,1),".", sep = ""), name[2], name[3])
+```
+## Given an array of strings representing dates (e.g., [“2005-11-28”, “2015-10-18”, “2000-01-01”]), show only those corresponding to odd months / Dado un vector de fechas, expresadas como strings (e.g., [“2005-11-28”, “2015-10-18”, “2000-01-01”]), muestra solamente aquellas correspondientes a los meses impares.
 
-```{r cars}
-summary(cars)
+
+```{r}
+dates <- c("2005-11-28", "2015-10-18", "2000-01-01")
+months <- as.numeric(substr(dates, 6, 7))
+mask <- months%%2 == 1
+dates <- dates[mask]
+
+dates
+
 ```
 
-## Including Plots
+## Given a string with several words (e.g., “Esta es una frase, pero no cualquier frase.”) create an array with each of the words in the string (e.g., ["Esta","es","una","frase","pero","no","cualquier","frase"])/ Dado un string con varias palabras (e.g., “Esta es una frase, pero no cualquier frase.”) crea un vector con cada una de las palabras del string (e.g., ["Esta","es","una","frase","pero","no","cualquier","frase"]).
 
-You can also embed plots, for example:
+```{r}
+words <- "Esta es una frase, pero no cualquier frase."
+words <- unlist(strsplit(x = words, split = " "))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+words
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+## Search in an array of strings those including only vocals "a" and "e" / Busca las palabras que usan solamente las vocales “a” y “e” en un vector de strings.
+
+```{r}
+x <- c("prueba", "elemento", "example", "no")
+mask <- unique(append(grep("a", x), grep("e", x)))
+mask
+
+x[mask]
+```
+
+## Given three numeric arrays representing days, months and years, create an array with dates (only if they are valid) (Hint: research the as.Date function) / Dados tres vectores dia, mes y anno crea un vector con las fechas completas. Si la fecha es inválida, ésta se descartará (Ayuda: investiga la función as.Date).
+
+```{r}
+days <- c(23, 20, 05, 32)
+months <- c(09, 06, 10, 13)
+years <- c(1997, 1980, 2006, 2021)
+dates <- paste(months, days, years ,sep = "/")
+dates <- dates[!is.na(as.Date(dates, "%m/%d/%y"))]
+
+dates
+```
